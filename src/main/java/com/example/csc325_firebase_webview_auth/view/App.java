@@ -1,50 +1,42 @@
 package com.example.csc325_firebase_webview_auth.view;
 
-
-import com.example.csc325_firebase_webview_auth.model.FirestoreContext;
-import com.google.cloud.firestore.Firestore;
-import com.google.firebase.auth.FirebaseAuth;
-import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-/**
- * JavaFX App
- */
+import java.io.IOException;
+
 public class App extends Application {
 
-    public static Firestore fstore;
-    public static FirebaseAuth fauth;
-    public static Scene scene;
-    private final FirestoreContext contxtFirebase = new FirestoreContext();
+    private static Scene scene;
 
-  @Override
-public void start(Stage primaryStage) throws Exception {
-    fstore = contxtFirebase.firebase();
-    fauth = FirebaseAuth.getInstance();
-    SplashScreen.show(primaryStage);
-}
-    public static void showMainView(Stage stage) throws IOException {
-    scene = new Scene(loadFXML("/files/AccessFBView.fxml"));
-    stage.setScene(scene);
-    stage.setTitle("Firebase JavaFX App");
-    stage.show();
-}
-
-    public static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
+    @Override
+    public void start(Stage stage) throws Exception {
+        SplashScreen.show(stage);
     }
 
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml ));
-        return fxmlLoader.load();
+    public static void showMainView(Stage stage) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("/files/AccessFBView.fxml"));
+        scene = new Scene(loader.load(), 900, 600);
+
+        scene.getStylesheets().add(
+                App.class.getResource("/files/style.css").toExternalForm()
+        );
+
+        stage.setScene(scene);
+        stage.setTitle("Firebase JavaFX App");
+        stage.show();
+    }
+
+    public static void setRoot(String fxml) throws IOException {
+        scene.setRoot(
+                FXMLLoader.load(App.class.getResource(fxml))
+        );
     }
 
     public static void main(String[] args) {
-        launch(args);
+        launch();
     }
-
 }
