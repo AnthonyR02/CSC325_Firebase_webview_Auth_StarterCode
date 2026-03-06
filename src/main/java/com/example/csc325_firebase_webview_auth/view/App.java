@@ -21,14 +21,18 @@ public class App extends Application {
     public static Scene scene;
     private final FirestoreContext contxtFirebase = new FirestoreContext();
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        fstore = contxtFirebase.firebase();
-        fauth = FirebaseAuth.getInstance();
-        scene = new Scene(loadFXML("/files/AccessFBView.fxml"));
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
+  @Override
+public void start(Stage primaryStage) throws Exception {
+    fstore = contxtFirebase.firebase();
+    fauth = FirebaseAuth.getInstance();
+    SplashScreen.show(primaryStage);
+}
+    public static void showMainView(Stage stage) throws IOException {
+    scene = new Scene(loadFXML("/files/AccessFBView.fxml"));
+    stage.setScene(scene);
+    stage.setTitle("Firebase JavaFX App");
+    stage.show();
+}
 
     public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
